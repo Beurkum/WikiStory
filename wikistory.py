@@ -22,7 +22,7 @@ soup = openNewPage('http://en.wikipedia.org/wiki/Apple_Inc.')
 
 for new_page in range(10):
     #print(soup.title.text)
-    footnote_regex = re.compile(r'\[\d+\]')
+    citation_regex = re.compile(r'\[\d*\w*\]')
     wiki_link_regex = re.compile(r'/wiki/')
 
     # print first n paragraphs of page and grab links in paragraphs
@@ -36,7 +36,7 @@ for new_page in range(10):
         if not links == []:
             last_link = links[-1]
         unedited = text.get_text()
-        for match in footnote_regex.findall(unedited):
+        for match in citation_regex.findall(unedited):
             reps[match] = ''
         edited = replace_all(unedited, reps)
         print(edited)
